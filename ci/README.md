@@ -15,6 +15,7 @@ Only the branches of this repo are monitored for this keyword.
 It is a good practice, before publishing changes to execute the full CI locally on your machine:
 
 ```bash
+# The tmp directory will need about 35 GB of disk space
 mkdir tmp
 
 # CPU-only build
