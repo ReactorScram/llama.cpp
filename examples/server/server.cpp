@@ -144,7 +144,7 @@ enum task_type {
 
 struct task_server {
     int id;
-    int target_id;
+    int target_id = 0;
     task_type type;
     json data;
     bool infill_mode = false;
@@ -153,7 +153,7 @@ struct task_server {
 
 struct task_result {
     int id;
-    bool stop;
+    bool stop = false;
     bool error;
     json result_json;
 };
