@@ -1,5 +1,12 @@
 #pragma once
 
+/**
+ * @file
+ * @brief Header for sampling contexts.
+ *
+ * TODO: What is a sampling context? How does it differ from a normal context?
+ */
+
 #include "llama.h"
 
 #include "grammar-parser.h"
@@ -37,7 +44,10 @@ typedef struct llama_sampling_params {
     std::unordered_map<llama_token, float> logit_bias; // logit bias for specific tokens
 } llama_sampling_params;
 
-// general sampler context
+/**
+ * @brief general sampler context
+ */
+
 // TODO: move to llama.h
 struct llama_sampling_context {
     // parameters that will be used for sampling
@@ -58,14 +68,19 @@ struct llama_sampling_context {
 
 #include "common.h"
 
-// Create a new sampling context instance.
+/**
+ * @brief Create a new sampling context instance.
+ */
 struct llama_sampling_context * llama_sampling_init(const struct llama_sampling_params & params);
 
 void llama_sampling_free(struct llama_sampling_context * ctx);
 
-// Reset the sampler context
-// - clear prev tokens
-// - reset grammar
+/**
+ * @brief Reset the sampler context.
+ *
+ * - clear prev tokens
+ * - reset grammar
+ */
 void llama_sampling_reset(llama_sampling_context * ctx);
 
 // Copy the sampler context
@@ -80,29 +95,35 @@ std::string llama_sampling_prev_str(llama_sampling_context * ctx_sampling, llama
 // Print sampling parameters into a string
 std::string llama_sampling_print(const llama_sampling_params & params);
 
-// this is a common sampling function used across the examples for convenience
-// it can serve as a starting point for implementing your own sampling function
-// Note: When using multiple sequences, it is the caller's responsibility to call
-//       llama_sampling_reset when a sequence ends
-//
-// required:
-//  - ctx_main:     context to use for sampling
-//  - ctx_sampling: sampling-specific context
-//
-// optional:
-//  - ctx_cfg:      context to use for classifier-free guidance
-//  - idx:          sample from llama_get_logits_ith(ctx, idx)
-//
-// returns:
-//  - token:      sampled token
-//  - candidates: vector of candidate tokens
-//
+///
+/// @brief This is a common sampling function used across the examples for convenience.
+///
+/// It can serve as a starting point for implementing your own sampling function.
+///
+/// Note: When using multiple sequences, it is the caller's responsibility to call
+///       llama_sampling_reset when a sequence ends
+///
+/// @param ctx_sampling Required, sampling-specific context
+/// @param ctx_main Required, context to use for sampling
+/// @param ctx_cfg Optional, context to use for classifier-free guidance
+/// @param idx Optional, sample from llama_get_logits_ith(ctx, idx)
+///
+/// @return
+/// - token:      sampled token
+/// - candidates: vector of candidate tokens
+///
+
 llama_token llama_sampling_sample(
         struct llama_sampling_context * ctx_sampling,
         struct llama_context * ctx_main,
         struct llama_context * ctx_cfg,
         int idx = 0);
 
+/**
+ * @brief Push a token into the sampling context
+ *
+ * Used when pushing prompt tokens into the context.
+ */
 void llama_sampling_accept(
         struct llama_sampling_context * ctx_sampling,
         struct llama_context * ctx_main,
