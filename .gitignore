@@ -27,7 +27,10 @@
 lcov-report/
 gcovr-report/
 
+# Generated files
+
 build*/
+docs/doxygen/
 out/
 tmp/
 
