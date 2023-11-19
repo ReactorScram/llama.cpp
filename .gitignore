@@ -38,6 +38,7 @@ models-mnt
 /baby-llama
 /beam-search
 /benchmark-matmult
+/build-info.h
 /convert-llama2c-to-ggml
 /embd-input-test
 /embedding
